@@ -1,0 +1,8 @@
+---
+- name: Check the CS server status
+  hosts: all
+
+  roles:
+    # - debug
+    # - deploy
+    - upgrade

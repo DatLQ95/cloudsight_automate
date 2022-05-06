@@ -1,0 +1,11 @@
+credentials/*
+!credentials/example.pem
+
+key_files/*
+!key_files/example.truststore
+!key_files/domain_name
+
+all
+hosts
+result/
+*.DS_Store

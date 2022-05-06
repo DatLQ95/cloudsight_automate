@@ -1,0 +1,24 @@
+domain: your_domain.com
+ansible_user: ubuntu
+ansible_ssh_private_key_file: ../credentials/example.pem
+license_server_address: license_server.com
+license_server_IP_addr: license_server_IP
+license_server_port: licence_server_port
+
+# CloudSight info: 
+cloudsight_server_install_url: url_from_intranet
+cloudsight_version: x.y.z
+
+# Please consult in internal intranet
+inteno_user: user
+inteno_password: password
+
+# Installation properties, get this info from intranet (CloudSight team)
+keystore_password: password
+license_component_name: component_name
+license_component_secret: license_secret
+
+aws_accessKey_id: aws_accessKey_id
+aws_accessKey_secret: aws_accessKey_secret
+aws_region: region
+aws_maintainer_email: example@gmail.com
