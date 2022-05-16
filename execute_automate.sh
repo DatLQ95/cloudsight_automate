@@ -84,18 +84,19 @@ cp ansible/hosts /etc/ansible/hosts
 [ "$verbose" -eq "1" ] && echo "copy host file to /etc/ansible/hosts"
 
 # Check if we have result folder or not: 
-[ -d "result/" ] || mkdir result
+[ -d "result/" ] || mkdir result/$domain
 # Execute ansible-playbook cmd to a out file in result/
-if [ -z "$sudo_password" ]
-then
-    ansible-playbook ansible/site.yaml >> result/$output_file
-else
-    ansible-playbook -k $sudo_password ansible/site.yaml >> result/$output_file
-fi
+ansible-playbook ansible/site.yaml >> result/$domain/$output_file
+# if [ -z "$sudo_password" ]
+# then
+#     ansible-playbook ansible/site.yaml >> result/$output_file
+# else
+#     ansible-playbook -k $sudo_password ansible/site.yaml >> result/$output_file
+# fi
 
 # Execute a python script for the following task:
 # Clean the oputput file: delete the uncessary lines (fatal lines)
 
-[ "$verbose" -eq "1" ] || python3 save_result.py result/$output_file
+# [ "$verbose" -eq "1" ] || python3 save_result.py result/$output_file
 
 echo "Done! Check the output file at result/$output_file"

@@ -1,8 +1,10 @@
 ---
-- name: Check the CS server status
+- name: Automate CS deployment and upgrade
   hosts: all
 
   roles:
     # - debug
-    # - deploy
+    # - deploy_upgrade
     - upgrade
+    # - deploy 
+    # - renewal_certificate

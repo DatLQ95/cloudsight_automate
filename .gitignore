@@ -5,7 +5,9 @@ key_files/*
 !key_files/example.truststore
 !key_files/domain_name
 
-all
+ansible/group_vars/*
+!ansible/group_vars/all.example
+
 hosts
 result/
 *.DS_Store

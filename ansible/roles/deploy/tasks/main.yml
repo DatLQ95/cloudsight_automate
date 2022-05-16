@@ -1,7 +1,13 @@
 ---
+- name: Update apt-get repo and cache
+  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+  become: yes
+
 - name: check if tarball already there in the machine
   command: "ls -lart"
   register: ls_output
+
+- debug: msg="{{ ls_output.stdout.split('\n') }}"
 
 - name: download the tarball
   get_url:
@@ -13,7 +19,7 @@
 
 # Untar the tarball file:
 - name: Untar the tarball files
-  command: "tar -xvf ./cloudsight-install-{{ cloudsight_version }}.tar.bz2"
+  command: "tar -xvf cloudsight-install-{{ cloudsight_version }}.tar.bz2"
 
 # Create a new folder:
 - name: create the directory to install the CS server
@@ -36,6 +42,7 @@
   with_fileglob:
     - ../../../../key_files/{{ domain }}/*
     - ../../../../key_files/*.truststore
+    - ../files/*
   when: item.find("example.truststore") == -1
 
 # Change the file permission for python: 
@@ -47,13 +54,10 @@
 
 # Run the script to process the installation.properties:
 - name: Populate the properties file
-  script: ../files/auto_populate_file.py {{ domain }} {{ license_component_name }} {{ license_component_secret }} {{ aws_accessKey_id }} {{ aws_accessKey_secret }} {{ aws_region }} {{ aws_maintainer_email }} {{ keystore_password }}
+  script: ../files/auto_populate_file.py {{ domain }} {{ license_component_name }} {{ license_component_secret }} {{ deploy_tr069 }} {{ aws_accessKey_id }} {{ aws_accessKey_secret }} {{ aws_region }} {{ aws_maintainer_email }}
   args:
     chdir: /home/{{ ansible_user }}/cloudsight_{{ cloudsight_version }}/
     executable: python3
-
-# - name: get into that folder
-#   shell: "cd /home/{{ ansible_user }}/cloudsight_{{ cloudsight_version }}/"
 
 # Run the deployment command: 
 - name: Execute the deployment

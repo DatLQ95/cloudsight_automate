@@ -16,8 +16,9 @@
 - name: Rename the cloudsight-server-install 
   ansible.builtin.copy:
     remote_src: true
-    src: ~/cloudsight-server-install/
-    dest: ~/cloudsight-server-install-old
+    src: /home/{{ ansible_user }}/cloudsight-server-install/
+    dest: /home/{{ ansible_user }}/cloudsight-server-install-old/
+  become: yes
   when: ls_output.stdout.find('cloudsight-server-install') != -1
 
 # Untar the tarball file:
@@ -46,9 +47,6 @@
     - ../../../../key_files/{{ domain }}/*
     - ../../../../key_files/*.truststore
   when: item.find("example.truststore") == -1
-
-- name: get into that folder
-  shell: "cd /home/{{ ansible_user }}/cloudsight_{{ cloudsight_version }}/"
 
 # Run the deployment command: 
 - name: Execute the deployment

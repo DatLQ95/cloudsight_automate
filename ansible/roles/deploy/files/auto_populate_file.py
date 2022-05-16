@@ -6,21 +6,21 @@ import os
 domain_name = sys.argv[1]
 license_component_name = sys.argv[2]
 license_component_secret = sys.argv[3]
-aws_accessKey_id = sys.argv[4]
-aws_accessKey_secret = sys.argv[5]
-aws_region = sys.argv[6]
-aws_maintainer_email = sys.argv[7]
-keystore_password = sys.argv[8]
+freeacs_install = sys.argv[4]
+aws_accessKey_id = sys.argv[5]
+aws_accessKey_secret = sys.argv[6]
+aws_region = sys.argv[7]
+aws_maintainer_email = sys.argv[8]
 
 
 hostname_line = "iopsys.hostname"
-http_penpass_line = "iopsys.security.http.pempass"
 license_component_name_line = "iopsys.license.component.name"
 license_component_secret_line = "iopsys.license.component.secret"
 
+freeacs_install_line = "freeacs.install"
 aws_accessKey_id_line = "aws.accessKey.id"
 aws_accessKey_secret_line = "aws.accessKey.secret"
-aws_region_line = "aws.region=eu-west-1"
+aws_region_line = "aws.region"
 aws_maintainer_email_line = "aws.maintainer.email"
 
 new_line = list()
@@ -40,9 +40,6 @@ for line in lines:
     if hostname_line in line.strip("\n"):
         new_line.append(hostname_line + "=" + domain_name + "\n")
         continue
-    if http_penpass_line in line.strip("\n"):
-        new_line.append(http_penpass_line + "=" + keystore_password + "\n")
-        continue
     if license_component_name_line in line.strip("\n"):
         found_license_component_line = True
         new_line.append(license_component_name_line + "=" + license_component_name + "\n")
@@ -57,6 +54,9 @@ for line in lines:
         new_line.append(aws_accessKey_secret_line + "=" + aws_accessKey_secret + "\n")
         new_line.append(aws_region_line + "=" + aws_region + "\n")
         new_line.append(aws_maintainer_email_line + "=" + aws_maintainer_email + "\n")
+        continue
+    if freeacs_install_line in line.strip("\n"):
+        new_line.append(freeacs_install_line + "=" + freeacs_install + "\n")
         continue
     if line in default_lines:
         found_default_line = True
